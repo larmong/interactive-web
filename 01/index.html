@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>mouse move</title>
+  <style>
+    body {
+      background: lightgray;
+      overflow: hidden;
+    }
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 30px;
+      padding: 20px;
+    }
+    h1 span {
+      display: block;
+    }
+
+    .box {
+      transition: all 0.3s ease-in-out;
+      width: 130px;
+      height: 130px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-20%, -20%);
+    }
+    .box img {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+
+  <script>
+    window.onload = () => {
+      const h1 = document.querySelector('h1');
+      const box = document.querySelector('.box');
+
+      let x = 0;
+      let y = 0;
+      let targetX = 0;
+      let targetY = 0;
+      let speed = 0.08;
+
+      // page => 스크롤 포함하여 위치 값
+      // client => 현재 보여지는 페이지에서 위치 값
+      window.addEventListener("mousemove", (event) => {
+        x = event.pageX;
+        y = event.pageY;
+
+        box.style.left = `${x}px`
+        box.style.top = `${y}px`
+
+        h1.innerHTML = `<span>X: ${x}</span><span>Y: ${y}</span>`;
+      })
+
+
+      // 애니메이션(가속, 감속)
+      // const loop = () => {
+      //   targetX += (x - targetX) * speed;
+      //   targetY += (y - targetY) * speed;
+      //
+      //   box.style.left = `${targetX.toFixed(2)}px`
+      //   box.style.top = `${targetY.toFixed(2)}px`
+      //
+      //   window.requestAnimationFrame(loop)
+      // }
+      // loop();
+
+    }
+  </script>
+</head>
+<body>
+  <h1><span>X: 0</span><span>Y: 0</span></h1>
+  <div class="box"><img src="assets/butterfly.gif" alt="나비"></div>
+</body>
+</html>

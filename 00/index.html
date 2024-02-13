@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3d</title>
+</head>
+<body>
+    <canvas id="car" width="800" height="800"></canvas>
+
+    <script type="importmap">
+          {
+                "imports": {
+                  "three": "https://unpkg.com/three@0.141.0/build/three.module.js",
+                  "three/addons/": "https://unpkg.com/three@0.141.0/examples/jsm/"
+                }
+          }
+    </script>
+
+    <script type="module">
+        console.log("on")
+
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+        let scene = new THREE.Scene();
+        let renderer = new THREE.WebGLRenderer({
+            canvas: document.querySelector('#car'),
+            antialias: true,
+        });
+
+        let light = new THREE.AmbientLight(0xffffff, 2);
+        scene.add(light);
+
+        let camera = new THREE.PerspectiveCamera(30, 1);
+        camera.position.set(0,0,10);
+
+        let loader = new GLTFLoader();
+        loader.load('assets/scene.gltf', function(car){
+            scene.add(car.scene);
+            renderer.render(scene, camera);
+        }) ;
+
+
+        // document.addEventListener('mousemove', (event) => {
+        //     let deltaX = event.clientX;
+        //     let deltaY = event.clientY;
+        //
+        //     // 모델을 마우스 드래그에 따라 회전
+        //     scene.rotation.y += deltaX * 0.0005;
+        //     scene.rotation.x += deltaY * 0.0005;
+        //
+        //     renderer.render(scene, camera);
+        // });
+
+
+
+        let isDragging = false;
+        let previousMousePosition = {
+            x: 0,
+            y: 0
+        };
+
+        // 마우스 이벤트 리스너 등록
+        document.addEventListener('mousedown', (event) => {
+            isDragging = true;
+            previousMousePosition = {
+                x: event.clientX,
+                y: event.clientY
+            };
+        });
+
+        document.addEventListener('mousemove', (event) => {
+            if (isDragging) {
+                let deltaX = event.clientX - previousMousePosition.x;
+                let deltaY = event.clientY - previousMousePosition.y;
+
+                // 모델을 마우스 드래그에 따라 회전
+                scene.rotation.y += deltaX * 0.005;
+                scene.rotation.x += deltaY * 0.005;
+
+                renderer.render(scene, camera);
+
+                previousMousePosition = {
+                    x: event.clientX,
+                    y: event.clientY
+                };
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+    </script>
+
+</body>
+</html>

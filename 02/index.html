@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>mouse hover 효과</title>
+  <style>
+    * {
+      cursor: none;
+    }
+    body {
+      overflow: hidden;
+      background: lavender;
+      font-size: 15px;
+    }
+    .gate-box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      border: 1px solid #fff;
+    }
+    .top {
+      text-align: center;
+      padding: 40px 30px;
+    }
+    .bottom {
+      display: flex;
+      border-top: 1px solid #fff;
+    }
+    .bottom span {
+      padding: 14px 0;
+      position: relative;
+      display: inline-block;
+      width: 50%;
+      height: 100%;
+      text-align: center;
+    }
+    .bottom span:last-child::before {
+      position: absolute;
+      content: "";
+      left: 0;
+      top: 0;
+      width: 1px;
+      height: 100%;
+      background: #fff;
+    }
+    .bottom span:hover {
+      background: mediumpurple;
+      transition: all 0.3s ease-in-out;
+      color: #fff;
+    }
+    .cursor-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 100;
+
+    }
+    .circle {
+      transition: all 0.2s ease-in-out;
+      position: fixed;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.2);
+      margin: -60px -60px;
+      pointer-events: none;
+    }
+  </style>
+  <script>
+    window.onload = () => {
+      const cursorItem = document.querySelector(".cursor-item");
+      const circle = document.querySelector(".circle");
+      const btnAll = document.querySelectorAll(".btn");
+
+      btnAll.forEach((btn) => {
+        console.log(btn)
+        btn.addEventListener("mouseenter", () => {
+          circle.style.transform = "scale(.3)";
+        })
+        btn.addEventListener("mouseleave", () => {
+          circle.style.transform = "scale(1)";
+        })
+      })
+
+      let x = 0,
+          y = 0;
+      let targetX = 0,
+          targetY = 0;
+      let speed = 0.1;
+
+      window.addEventListener("mousemove", (e) => {
+        x = e.pageX;
+        y = e.pageY;
+      })
+
+      const loop = () => {
+        targetX += (x - targetX) * speed;
+        targetY += (y - targetY) * speed;
+
+        cursorItem.style.transform = `translate(${targetX}px, ${targetY}px)`;
+
+        window.requestAnimationFrame(loop)
+      }
+
+      loop();
+    }
+  </script>
+</head>
+<body>
+  <div class="cursor-item">
+    <span class="circle"></span>
+  </div>
+  <div class="gate-box">
+    <div class="top">
+      마스크를 써야 하나요?
+    </div>
+    <div class="bottom">
+      <span class="btn">YES</span>
+      <span class="btn">NO</span>
+    </div>
+  </div>
+</body>
+</html>
