@@ -1,8 +1,3 @@
-const text = document.querySelector('h1 span')
-const bar = document.querySelector('.bar')
-const item1 = document.querySelector('.bg-item1')
-const item2 = document.querySelector('.bg-item2')
-
 const lenis = new Lenis();
 function raf(time) {
   lenis.raf(time)
@@ -10,24 +5,24 @@ function raf(time) {
 }
 requestAnimationFrame(raf)
 
+
+const visual = document.querySelector(".visual");
+const bar = document.querySelector('.bar');
+
 window.addEventListener("scroll", () => {
   let scrollNum = window.scrollY;
   let bodySize = document.body.scrollHeight - window.innerHeight;
-  let per = percent(scrollNum, bodySize);
 
-  text.innerText = per;
-  bar.style.width = `${per}%`;
+  bar.style.width = `${percent(scrollNum, bodySize)}%`;
 
-  item1.style.transform = `translateX(${per}%)`
-  item2.style.transform = `translateY(${-per}%)`
+
+  if(scrollNum >= 325){
+    visual.classList.add("header-fixed");
+  } else {
+    visual.classList.remove("header-fixed");
+  }
 })
 
 const percent = (scrollNum, bodySize) => {
   return (scrollNum / bodySize * 100).toFixed(0);
 }
-
-const loop = () => {
-
-}
-
-loop();

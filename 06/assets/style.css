@@ -7,6 +7,9 @@ body {
   overflow-x: hidden;
   width: 100%;
 }
+*::-webkit-scrollbar {
+  display: none;
+}
 img {
   width: 100%;
   height: 100%;
@@ -19,12 +22,29 @@ img {
   min-height: 100vh;
 }
 .visual {
-  position: relative;
+  transition: opacity .6s ease;
+  position: fixed;
+  z-index: 1;
   width: 100%;
   height: 400px;
-  background: url("images/img1.jpg") center center / cover no-repeat;
+  background: url("images/img1.jpg") top left / cover no-repeat;
+}
+.visual.header-fixed {
+  height: 75px;
+  z-index: 5;
+  opacity: 0.9;
+}
+.visual.header-fixed .title-wrapper p {
+  display: none;
+}
+.visual.header-fixed .title-wrapper h2 {
+  font-size: 22px;
 }
 .progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 6;
   width: 100vw;
   height: 10px;
   border-bottom: 1px solid #fff;
@@ -48,17 +68,113 @@ img {
   position: absolute;
   z-index: 1;
   color: #fff;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 .header {
   display: flex;
   justify-content: space-between;
   padding: 20px;
-
+  align-items: center;
 }
 .header h1 {
   font-size: 24px;
+  letter-spacing: 2px;
+  padding-top: 5px;
 }
 .icon-wrapper {}
 .menu-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 25px;
+  cursor: pointer;
+}
+.menu-icon span {
+  display: inline-block;
+  width: 100%;
+  height: 3px;
+  background: #fff;
+}
+.menu-icon span::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #fff;
+}
+.menu-icon span::after {
+  position: absolute;
+  content: "";
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #fff;
+}
+.title-wrapper {
+  padding-top: 5px;
+  width: 60%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.title-wrapper h2 {
+  font-size: 30px;
+}
+.title-wrapper p {
+  opacity: 0.9;
+  margin-top: 6px;
+}
 
+.contents-wrapper {
+  position: relative;
+  top: 400px;
+  z-index: 2;
+  background: #fff;
+}
+.contents {
+  padding: 50px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.default-cont {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.default-title {
+  font-size: 22px;
+}
+.default-text {}
+
+
+
+.footer {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  background: url("images/img1.jpg") top left / cover no-repeat;
+}
+.footer .dim-layer {
+  background: rgba(0, 0, 0, 0.8);
+}
+.footer-contents {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
